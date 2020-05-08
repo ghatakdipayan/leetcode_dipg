@@ -1,0 +1,32 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isCousins(self, root: TreeNode, x: int, y: int) -> bool:
+        
+        q = [root];
+        diff = False;
+        cousinA = False;
+        cousinB = False;
+        while q:
+            if not cousinA or not cousinB:
+                cousinA = False;
+                cousinB = False;
+            level = [];
+            for n in q:
+                if n.val == x: 
+                    cousinA = True
+                if n.val == y: 
+                    cousinB = True
+                if n.left and n.right:
+                    if(x == n.left.val and y == n.right.val) or (y == n.left.val and x == n.right.val):
+                        diff = True
+                for k in (n.left, n.right):
+                    if k: 
+                        level.append(k)
+            q = level[:]
+
+        return cousinA and cousinB and not diff;
